@@ -23,7 +23,7 @@ public class OrderBook {
     public String getBestBid() {
         Integer biggestKeyWithNoneZeroSize = bidMap.entrySet()
             .stream()
-            .filter(entry -> entry.getValue() != null)
+            .filter(entry -> entry.getValue() != 0)
             .map(Map.Entry::getKey)
             .max(Integer::compare)
             .orElseThrow(() -> new RuntimeException("BidMap is empty"));
@@ -34,7 +34,7 @@ public class OrderBook {
     public String getBestAsk() {
         Integer lowestKeyWithNoneZeroSize = bidMap.entrySet()
             .stream()
-            .filter(entry -> entry.getValue() != null)
+            .filter(entry -> entry.getValue() != 0)
             .map(Map.Entry::getKey)
             .min(Integer::compare)
             .orElseThrow(() -> new RuntimeException("AskMap is empty"));
