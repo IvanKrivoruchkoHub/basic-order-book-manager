@@ -21,19 +21,25 @@ public class OrderBook {
     }
 
     public String getBestBid() {
-        Integer biggestKey = bidMap.keySet()
+        Integer biggestKeyWithNoneZeroSize = bidMap.entrySet()
             .stream()
+            .filter(entry -> entry.getValue() != null)
+            .map(Map.Entry::getKey)
             .max(Integer::compare)
             .orElseThrow(() -> new RuntimeException("BidMap is empty"));
-        return biggestKey + "," + bidMap.get(biggestKey);
+        return biggestKeyWithNoneZeroSize + ","
+            + bidMap.get(biggestKeyWithNoneZeroSize);
     }
 
     public String getBestAsk() {
-        Integer lowestKey = askMap.keySet()
+        Integer lowestKeyWithNoneZeroSize = bidMap.entrySet()
             .stream()
+            .filter(entry -> entry.getValue() != null)
+            .map(Map.Entry::getKey)
             .min(Integer::compare)
             .orElseThrow(() -> new RuntimeException("AskMap is empty"));
-        return lowestKey + "," + askMap.get(lowestKey);
+        return lowestKeyWithNoneZeroSize + ","
+            + askMap.get(lowestKeyWithNoneZeroSize);
     }
 
     public Integer sizeByPrice(Integer key) {
